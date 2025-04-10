@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System</title>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; background: linear-gradient(135deg, #bfcb11, #2575fc); height: 100vh; display: flex; align-items: center; justify-content: center;">
+
+    <div id="choicePage" style="background: white; padding: 25px; width: 350px; border-radius: 12px; box-shadow: 0px 6px 12px rgba(0,0,0,0.3);">
+        <h2 style="color: #333;">Welcome!</h2>
+        <p style="color: #555; font-size: 16px;">Do you already have an account?</p>
+        <button onclick="showLogin()" style="padding: 12px; width: 100%; margin: 8px 0; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Yes, Login</button>
+        <button onclick="showSignup()" style="padding: 12px; width: 100%; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">No, Create Account</button>
+    </div>
+
+    <div id="loginPage" style="display: none; background: white; padding: 25px; width: 350px; border-radius: 12px; box-shadow: 0px 6px 12px rgba(0,0,0,0.3);">
+        <h2 style="color: #333;">Login</h2>
+        <input type="email" placeholder="Email" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+        <input type="password" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+        <button style="padding: 12px; width: 100%; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Login</button>
+        <br><br>
+        <a href="#" onclick="showChoice()" style="color: black; font-size: 14px;">Back</a>
+    </div>
+
+    <div id="signupPage" style="display: none; background: white; padding: 25px; width: 350px; border-radius: 12px; box-shadow: 0px 6px 12px rgba(0,0,0,0.3);">
+        <h2 style="color: #333;">Create Account</h2>
+        <input type="text" placeholder="Username" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+        <select style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+            <option value="">Select</option>
+            <option value="school">School Student</option>
+            <option value="college">College Student</option>
+            <option value="working">Working Professional</option>
+        </select>
+        <input type="email" placeholder="Email" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+        <input type="password" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+        <button style="padding: 12px; width: 100%; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px;">Sign Up</button>
+        <br><br>
+        <a href="#" onclick="showChoice()" style="color: #007bff; font-size: 14px;">Back</a>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById('choicePage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'block';
+        }
+        
+        function showSignup() {
+            document.getElementById('choicePage').style.display = 'none';
+            document.getElementById('signupPage').style.display = 'block';
+        }
+
+        function showChoice() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('signupPage').style.display = 'none';
+            document.getElementById('choicePage').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
