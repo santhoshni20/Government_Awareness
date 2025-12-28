@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Awareness Portal</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s ease-in-out;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background-color: #ffcc00;
+            color: black;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 220px;
+            top: 100%;
+            left: 0;
+            text-align: left;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #ffcc00;
+        }
+
+        /* Show dropdown on hover */
+        nav ul li:hover .dropdown,
+        nav ul li.active .dropdown {
+            display: block;
+        }
+
+        /* Content Sections */
+        .content {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: 0.5s ease-in-out;
+        }
+
+        /* Display active section */
+        .content.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* List Styles */
+        ul {
+            padding: 0;
+        }
+
+        ul li {
+            list-style: none;
+            padding: 10px;
+            font-size: 18px;
+            background: #f9f9f9;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        ul li span {
+            color: blue;
+            cursor: pointer;
+        }
+
+
+        ul li:hover {
+            background: #ffcc00;
+            color: black;
+        }
+
+        .selected-category {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #ffcc00;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        /* Input Box for "Others" */
+        #otherInput {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 90%;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Government Exams, Schemes & Scholarships Awareness</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li>
+                <a href="#" onclick="toggleDropdown('examDropdown')">Exams ▼</a>
+                <div class="dropdown" id = "examDropdown">
+                    <a href="#" onclick="selectExam('School Student')">School Student</a>
+                    <a href="#" onclick="selectExam('Engineering Student')">Engineering Student</a>
+                    <a href="#" onclick="selectExam('Medical Student')">Medical Student</a>
+                    <a href="#" onclick="selectExam('Agriculture Student')">Agriculture Student</a>
+                    <a href="#" onclick="selectExam('Commerce Student')">Commerce Student</a>
+                    <a href="#" onclick="enableOtherInput()">Others</a>
+                    <input type="text" id="otherInput" placeholder="Enter your category" oninput="updateCustomExam()">
+                </div>
+            </li>
+            <li>
+                <a href="#" onclick="toggleDropdown('scholarshipDropdown')">Scholarships ▼</a>
+                <div class="dropdown" id="scholarshipDropdown">
+                    <a href="#" onclick="selectScholarship('Central')">Central Scholarships</a>
+                    <a href="#" onclick="selectScholarship('State')">State Scholarships</a>
+                </div>
+            </li>
+            <li>
+                <a href="#" onclick="toggleDropdown('schemesDropdown')">Schemes ▼</a>
+                <div class="dropdown" id="schemesDropdown">
+                    <a href="#" onclick="selectScheme('Central')">Central Schemes</a>
+                    <a href="#" onclick="selectScheme('State')">State Schemes</a>
+                </div>
+            </li> 
+        </ul>
+    </nav>
+
+    <!-- Content Sections -->
+    <section id="exams" class="content">
+        <h2>Government Exams</h2>
+        <p id="examCategoryText">Select a category to see relevant exams.</p>
+        <ul id="examList"></ul>
+    </section>
+
+    <section id="scholarships" class="content">
+        <h2>Scholarships</h2>
+        <ul id="scholarshipList">
+            <li>National Scholarship Portal (NSP)</li>
+            <li>PM Scholarship Scheme</li>
+            <li>State Government Scholarships</li>
+        </ul>
+    </section>
+
+    <section id="schemes" class="content">
+        <h2>Government Schemes</h2>
+        <!-- <ul>
+            <li>Ayushman Bharat - Health Insurance</li>
+            <li>PM Kisan Samman Nidhi</li>
+            <li>MGNREGA - Employment Scheme</li>
+        </ul> -->
+        <p id="schemeCategoryText">Select a category to see relevant schemes.</p>
+        <ul id="schemeList"></ul>
+    </section>
+
+    <section id="detailsSection" class="content">
+        <h2 id="detailsTitle"></h2>
+        <h3>Eligibility</h3>
+        <p id="eligibilityText"></p>
+        <h3>Syllabus</h3>
+        <p id="syllabusText"></p>
+    </section>
+
+    <script>
+        function showEligibility(name, eligibility) {
+    document.getElementById("scholarshipList").innerHTML = `
+        <h3>${name} Details</h3>
+        <p><strong>Eligibility:</strong> ${eligibility}</p>
+        <button onclick="goBack()">← Back</button>
+    `;
+}
+
+        // Function to show the selected section
+        function showSection(sectionId) {
+            document.querySelectorAll('.content').forEach(section => {
+                section.classList.remove('active');
+            });
+    
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function showDetails(name, eligibility, syllabus) {
+    document.getElementById("scholarshipList").innerHTML = `
+        <h3>${name} Details</h3>
+        <p><strong>Eligibility:</strong> ${eligibility}</p>
+        <p><strong>Syllabus:</strong> ${syllabus}</p>
+        <button onclick="goBack()">← Back</button>
+    `;
+}
+
+function goBack() {
+    selectScholarship("Central"); // Update dynamically based on the last selected category
+}
+
+
+        function showDetails(title, eligibility, syllabus) {
+            document.getElementById("detailsTitle").innerText = title;
+            document.getElementById("eligibilityText").innerText = eligibility;
+            document.getElementById("syllabusText").innerText = syllabus;
+            showSection("detailsSection");
+        }
+
+    
+        // Function to handle exam category selection
+        function selectExam(category) {
+            document.getElementById("examCategoryText").innerText = `Selected Category: ${category}`;
+            document.getElementById("otherInput").style.display = "none";
+    
+            const exams = {
+                "School Student": [
+                    {name: "NTSE", eligibility: "Class 10 students", syllabus: "MAT (Mental Ability Test) & SAT (Scholastic Aptitude Test - Science, Math, Social Science, English)."},
+                    {name: "Olympiads", eligibility: "Typically Class 1-12 students.", syllabus: "Based on school curriculum in Math, Science, or other subjects."},
+                    {name: "KVPY", eligibility: "Class 11, 12, or 1st-year UG students in Basic Sciences.", syllabus: "Physics, Chemistry, Biology, and Mathematics (Class 9-12 NCERT)."},
+                    
+                ],
+                "Engineering Student": [
+                    {name: "JEE Main", eligibility: "Class 12 pass or appearing with Physics, Chemistry, and Mathematics.", syllabus: "Class 11 & 12 Physics, Chemistry, and Mathematics."},
+                    {name: "JEE Advanced", eligibility: "Top qualifiers in JEE Main with Class 12 PCM & 75% aggregate (65% for SC/ST/PwD)", syllabus: "Advanced topics in Physics, Chemistry, and Mathematics."},
+                    {name: "GATE", eligibility: "Bachelor’s degree holders in Engineering/Technology/Architecture.", syllabus: "Subject-specific topics based on the chosen engineering discipline."},
+                    
+                ],
+                "Medical Student": [
+                    {name: "NEET", eligibility: "Class 12 pass or appearing with Physics, Chemistry, Biology, and English.", syllabus: "Class 11 & 12 PCB (Physics, Chemistry, Biology)."},
+                    {name: "AIIMS Entrance", eligibility: "Class 12 pass or appearing with PCB & 60% aggregate (50% for SC/ST).", syllabus: " PCB, General Knowledge, and Aptitude"},
+                    {name: "JIPMER Entrance", eligibility: "Class 12 pass or appearing with PCB & 50% aggregate (40% for SC/ST/OBC).", syllabus: " PCB, English Language, Logical & Quantitative Reasoning."},
+                ],
+                "Agriculture Student": [
+                    {name: "ICAR AIEEA", eligibility: "Class 12 pass or appearing with PCB, PCM, PCA, or ABC subjects.", syllabus: "Based on the chosen stream (Physics, Chemistry, Biology/Math/Agriculture)."},
+                    {name: "State Agriculture Entrance", eligibility: "Varies by state; generally Class 12 pass with relevant subjects.", syllabus: "Physics, Chemistry, Biology/Mathematics, and Agriculture."},
+                ],
+                "Commerce Student": [
+                    {name: "CA Foundation", eligibility: "Class 12 appearing or passed students.", syllabus: "Principles of Accounting, Business Laws, Economics, Quantitative Aptitude."},
+                    {name: "CMA", eligibility: "Class 12 pass or equivalent.", syllabus: "Fundamentals of Economics, Accounting, Business Mathematics, Laws, and Ethics."},
+                    {name: "CS Entrance", eligibility: "Class 12 pass or equivalent.", syllabus: "Business Environment, Business Laws, Economics, Accounting, and Communication."},
+                    
+                ],
+            };
+
+            document.getElementById("examList").innerHTML = exams[category]
+                ? exams[category].map(exam => `
+                <li>${exam} 
+                    <span onclick="showExamDetails('${exam}', getExamEligibility('${exam}'), getExamSyllabus('${exam}'))">→</span>
+                </li>
+                `).join('')
+                : "<li>No exams found</li>";
+
+    
+            document.getElementById("examList").innerHTML = exams[category]
+                ? exams[category].map(exam => `<li>${exam.name} <span onclick="showDetails('${exam.name}', '${exam.eligibility}', '${exam.syllabus}')">→</span></li>`).join('')
+                : "<li>No exams found</li>";
+
+            showSection("exams");
+    
+            // Hide all dropdowns
+            closeDropdowns();
+        }
+    
+        function enableOtherInput() {
+            document.getElementById("examCategoryText").innerText = "Selected Category: Others";
+            document.getElementById("examList").innerHTML = "";
+            document.getElementById("otherInput").style.display = "block";
+            document.getElementById("otherInput").focus();
+    
+            // Hide all dropdowns
+            closeDropdowns();
+        }
+    
+        function updateCustomExam() {
+            let customCategory = document.getElementById("otherInput").value.trim();
+            if (customCategory.length > 0) {
+                document.getElementById("examCategoryText").innerText = `Selected Category: ${customCategory}`;
+            }
+        }
+
+        function showExamDetails(name, eligibility, syllabus) {
+    document.getElementById("examList").innerHTML = `
+        <h3>${name} Details</h3>
+        <p><strong>Eligibility:</strong> ${eligibility}</p>
+        <p><strong>Syllabus:</strong> ${syllabus}</p>
+        <button onclick="selectExam('School Student')">← Back</button>
+    `;
+}
+
+    
+        function selectScholarship(type) {
+            const scholarships = {
+                "Central": [
+                    "National Scholarship Portal (NSP)",
+                    "PM Scholarship Scheme",
+                    "Central Sector Scheme of Scholarship",
+                    "Pre-Matric Scholarships for SC/ST/OBC Students",
+                    "UGC Scholarships"
+                ],
+                "State": [
+                    "State Government Scholarships",
+                    "State Merit Scholarship",
+                    "State Domicile Scholarship",
+                    "State Pre-Matric Scholarships for SC/ST/OBC",
+                    "State Post-Matric Scholarships"
+                ]
+            };
+
+            document.getElementById("scholarshipList").innerHTML = `
+                <div class="selected-category">Selected Category: ${type}</div>
+                ${scholarships[type] ? scholarships[type].map(scholarship => `
+                <li>${scholarship} 
+                    <span onclick="showEligibility('${scholarship}', getScholarshipEligibility('${scholarship}'))">→</span>
+                </li>
+                `).join('') : "<li>No scholarships found</li>"}
+                `;
+
+            showSection("scholarships");
+            closeDropdowns();
+        }
+
+        // Function to handle scheme selection
+        function selectScheme(type) {
+            document.getElementById("schemeCategoryText").innerText = `Selected Category: ${type}`;
+
+            const schemes = {
+                "Central": [
+                "Ayushman Bharat - Health Insurance",
+                "PM Kisan Samman Nidhi",
+                "Digital India Initiative",
+                "Make in India",
+                "Startup India"
+            ],
+            "State": [
+                "State Ration Card Scheme",
+                "State Housing Scheme",
+                "State Agriculture Subsidy",
+                "State Employment Guarantee",
+                "State Welfare Fund"
+            ]
+            };
+
+        // Populate the scheme list
+        const list = schemes[type] || [];
+        document.getElementById("schemeList").innerHTML = list.length > 0
+        ? list.map(scheme => `<li>${scheme}</li>`).join('')
+        : "<li>No schemes found</li>";
+
+        // Hide all dropdowns after selection
+        closeDropdowns();
+
+        // Show the schemes section
+        showSection('schemes');
+        }
+
+    
+        // Toggle visibility of the dropdown on click
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            const isActive = dropdown.style.display === "block";
+    
+            // Close all dropdowns first
+            closeDropdowns();
+    
+            // Toggle the clicked dropdown
+            dropdown.style.display = isActive ? "none" : "block";
+        }
+    
+        // Close all dropdowns
+        function closeDropdowns() {
+            document.querySelectorAll('.dropdown').forEach(drop => {
+                drop.style.display = "none";
+            });
+        }
+    
+        // Hide dropdown when clicking outside
+        document.addEventListener("click", (event) => {
+            if (!event.target.closest("nav ul li")) {
+                closeDropdowns();
+            }
+        });
+
+        function getScholarshipEligibility(scholarship) {
+    const eligibilityData = {
+        "National Scholarship Portal (NSP)": "Open to all students based on merit and financial need.",
+        "PM Scholarship Scheme": "Available for children of ex-servicemen and paramilitary personnel.",
+        "Central Sector Scheme of Scholarship": "For top-performing students in Class 12 with a minimum of 80% marks.",
+        "Pre-Matric Scholarships for SC/ST/OBC Students": "For students from SC/ST/OBC backgrounds from Class 1 to 10.",
+        "UGC Scholarships": "For university students pursuing higher education with academic excellence.",
+        "State Government Scholarships": "Varies by state; usually based on economic and academic criteria.",
+        "State Merit Scholarship": "Awarded to students with exceptional academic records.",
+        "State Domicile Scholarship": "Available for students who are permanent residents of the respective state.",
+        "State Pre-Matric Scholarships for SC/ST/OBC": "Targeted at financially weaker students from reserved categories.",
+        "State Post-Matric Scholarships": "For students pursuing higher education after Class 10 in state institutions."
+    };
+
+    return eligibilityData[scholarship] || "Eligibility criteria not available.";
+}
+
+    </script>    
+
+</body>
+</html>

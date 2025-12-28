@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Awareness Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 20px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="dropdown">
+            <button>Exams</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="selectExam('Science')">Science</a>
+                <a href="#" onclick="selectExam('Agriculture')">Agriculture</a>
+                <a href="#" onclick="selectExam('Commerce')">Commerce</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button>Scholarships</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="selectScholarship('National')">National</a>
+                <a href="#" onclick="selectScholarship('State')">State</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button>Schemes</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="selectScheme('Education')">Education</a>
+                <a href="#" onclick="selectScheme('Agriculture')">Agriculture</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="displayArea">
+        <h2>Welcome to the Government Awareness Portal</h2>
+        <p>Select an option from the menu to view details.</p>
+    </div>
+
+    <script>
+        function selectExam(category) {
+            let content = {
+                'Science': 'Here are the top government exams for Science students: JEE, NEET, GATE, etc.',
+                'Agriculture': 'Exams for Agriculture students: ICAR AIEEA, NABARD, etc.',
+                'Commerce': 'Commerce Exams: CA, CS, CFA, etc.'
+            };
+            document.getElementById('displayArea').innerHTML = `<h2>${category} Exams</h2><p>${content[category]}</p>`;
+        }
+        
+        function selectScholarship(type) {
+            let content = {
+                'National': 'National Scholarships include NSP, INSPIRE, etc.',
+                'State': 'State-specific scholarships vary based on eligibility.'
+            };
+            document.getElementById('displayArea').innerHTML = `<h2>${type} Scholarships</h2><p>${content[type]}</p>`;
+        }
+        
+        function selectScheme(category) {
+            let content = {
+                'Education': 'Government education schemes like RTE, PMSS, etc.',
+                'Agriculture': 'Agriculture schemes: PM-Kisan, NABARD, etc.'
+            };
+            document.getElementById('displayArea').innerHTML = `<h2>${category} Schemes</h2><p>${content[category]}</p>`;
+        }
+    </script>
+</body>
+</html>
